@@ -17,7 +17,11 @@ public class Camisa {
     private String club;
     private String manufacturer;
     private String imgUrl;
+
+    @Column(columnDefinition = "TEXT")
     private String shortDescription;
+
+    @Column(columnDefinition = "TEXT")
     private String longDescription;
 
     public Camisa(){
