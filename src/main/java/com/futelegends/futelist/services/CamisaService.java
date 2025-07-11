@@ -1,5 +1,6 @@
 package com.futelegends.futelist.services;
 
+import com.futelegends.futelist.CamisaProjection;
 import com.futelegends.futelist.dto.CamisaDTO;
 import com.futelegends.futelist.dto.CamisaFullDTO;
 import com.futelegends.futelist.entities.Camisa;
@@ -27,6 +28,14 @@ public class CamisaService {
     @Transactional (readOnly = true)
     public List<CamisaDTO> findAll() {
         List<Camisa> result = camisaRepository.findAll();
+        return result.stream().map(x -> new CamisaDTO(x)).toList();
+
+
+    }
+
+    @Transactional (readOnly = true)
+    public List<CamisaDTO> findByList(Long listId) {
+        List<CamisaProjection> result = camisaRepository.searchByList(listId);
         return result.stream().map(x -> new CamisaDTO(x)).toList();
 
 

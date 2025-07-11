@@ -1,5 +1,6 @@
 package com.futelegends.futelist.dto;
 
+import com.futelegends.futelist.CamisaProjection;
 import com.futelegends.futelist.entities.Camisa;
 import jakarta.persistence.Column;
 
@@ -23,6 +24,14 @@ public class CamisaDTO {
         club = entity.getClub();
         imgUrl = entity.getImgUrl();
         shortDescription = entity.getShortDescription();
+    }
+
+    public CamisaDTO(CamisaProjection projection) {
+        id = projection.getId();
+        title = projection.getTitle();
+        year = projection.getYear();
+        imgUrl = projection.getImgUrl();
+        shortDescription = projection.getShortDescription();
     }
 
     public Long getId() {

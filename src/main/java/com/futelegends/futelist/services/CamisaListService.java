@@ -1,5 +1,6 @@
 package com.futelegends.futelist.services;
 
+import com.futelegends.futelist.CamisaProjection;
 import com.futelegends.futelist.dto.CamisaDTO;
 import com.futelegends.futelist.dto.CamisaFullDTO;
 import com.futelegends.futelist.dto.CamisaListDTO;
@@ -19,6 +20,9 @@ public class CamisaListService {
     @Autowired
     private CamisaListRepository camisaListRepository;
 
+    @Autowired
+    private CamisaRepository camisaRepository;
+
 
     @Transactional (readOnly = true)
     public List<CamisaListDTO> findAll() {
@@ -27,4 +31,21 @@ public class CamisaListService {
 
 
     }
+    @Transactional
+    public void move(Long listId, int sourceIndex, int destinationIndex){
+
+        List<CamisaProjection> list = camisaRepository.searchByList(listId);
+
+        CamisaProjection obj = list.remove(sourceIndex);
+        list.add(destinationIndex, obj);
+
+        int min = sourceIndex < destinationIndex ? sourceIndex : destinationIndex;
+        int max = sourceIndex < destinationIndex ? destinationIndex : sourceIndex;
+
+        for (int i = min; i <= max; i++) {
+            camisaListRepository.updateBelongingPosition(listId, list.get(i).getId(),i);
+        }
+
+    }
+
 }
